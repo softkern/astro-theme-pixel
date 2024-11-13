@@ -1,0 +1,40 @@
+---
+
+---
+
+<button id="menuToggle" class="max-md:visible md:hidden aria-label="hamburger" aria-haspopup="true" aria-expanded="false" ">
+  <div
+      class="flex flex-col items-center justify-center gap-2"
+  >
+      <div
+          id="top"
+          class="w-18px h-2px bg-black dark:bg-white"
+      >
+      </div>
+      <div
+          id="bottom"
+          class="w-18px h-2px bg-black dark:bg-white"
+      >
+      </div>
+  </div>
+</button>
+
+<style>
+  #top {
+      transform: rotate(0deg);
+      transition: transform 0.3s ease-in-out;
+  }
+
+  #bottom {
+      transform: rotateZ(0deg);
+      transition: transform 0.3s ease-in-out;
+  }
+
+  .toggle-expanded #top {
+      transform: rotate(45deg) translateY(4px) translateX(3px);
+  }
+
+  .toggle-expanded #bottom {
+      transform: rotate(-45deg) translateY(-4px) translateX(3px);
+  }
+</style>
