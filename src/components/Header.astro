@@ -8,9 +8,9 @@ import ThemeToggle from './ThemeToggle.astro'
 <header class="w-full">
   <div class="relative flex items-center justify-between h-16 w-full mx-auto md:max-w-screen-md 2xl:max-w-screen-xl">
     <Logo />
-    <nav id="menus" class="flex gap-2 ml-4 bg-background">
+    <nav id="menus" class="flex gap-1 ml-3 bg-background">
       {MENUS.map((menu) => (
-        <a href={menu.url} class="px-4 py-2 max-md:hover:bg-secondary">{menu.name}</a>
+        <a href={menu.url} class="px-4 py-2 font-400 text-sm text-muted-foreground hover:text-primary max-md:hover:bg-secondary">{menu.name}</a>
       ))}
     </nav>
     <div class="flex gap-5 ml-auto mr-8">
@@ -24,14 +24,13 @@ import ThemeToggle from './ThemeToggle.astro'
   document.addEventListener("astro:page-load", () => {
       document.querySelector("#menuToggle")?.addEventListener('click', () => {
           document.querySelector("#menuToggle")?.classList.toggle('toggle-expanded')
-          document.querySelector("#header")?.classList.toggle('header-expanded')
           document.querySelector("#menus")?.classList.toggle('expanded')
       })
 
       const pathname = window.location.pathname.split("/").splice(0, 2).join("/")
-      const currentLink = document.querySelector(`#navLinks a[href="${pathname}"]`)
+      const currentLink = document.querySelector(`#menus a[href="${pathname}"]`)
       if (currentLink) {
-          currentLink.classList.add("selected-link")
+          currentLink.classList.add("selected")
       }
   })
 </script>
@@ -40,6 +39,10 @@ import ThemeToggle from './ThemeToggle.astro'
 #menus.expanded {
     display: flex;
     opacity: 1;
+}
+
+#menus a.selected {
+  --uno: "text-primary font-semibold"
 }
 
 @media screen and (max-width: 768px) {

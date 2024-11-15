@@ -1,0 +1,23 @@
+---
+// src/components/RecentPosts.astro
+import { getCollection } from 'astro:content'
+import { fetchPosts } from '@lib/post'
+import PostCard from './PostCard.astro'
+
+const posts = await fetchPosts()
+const recentPosts = posts.slice(0, 5)
+---
+
+<section class="recent-posts mt-16 mb-16">
+  <h2 class="text-xl font-bold mb-8">近期文章</h2>
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    {recentPosts.map((post) => (
+      <PostCard post={post} />
+    ))}
+  </div>
+  <div class="mt-8 text-center">
+    <a href="/posts" class="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
+      查看所有文章
+    </a>
+  </div>
+</section>
