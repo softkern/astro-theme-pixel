@@ -1,0 +1,33 @@
+---
+import PostCard from '@components/PostCard.astro'
+import BaseLayout from '@layouts/BaseLayout.astro'
+import { fetchPosts, fetchTags } from '@lib/post'
+import type { GetStaticPaths } from 'astro'
+
+export const getStaticPaths = (async () => {
+  const posts = await fetchPosts()
+  const tags = Array.from((await fetchTags()).keys())
+
+  return tags.map((tag) => {
+    const filteredPosts = posts.filter((post) => post.data.tags?.includes(tag))
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    }
+  })
+}) satisfies GetStaticPaths
+
+const { tag } = Astro.params
+const { posts } = Astro.props
+---
+
+<BaseLayout>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8 font-serif">#{tag}</h1>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </main>
+</BaseLayout>

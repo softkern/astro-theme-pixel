@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '@layouts/BaseLayout.astro'
+import { fetchTags } from '@lib/post'
+
+const tags = Array.from(await fetchTags())
+---
+
+<BaseLayout>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8">标签</h1>
+    <div class="flex flex-wrap gap-4">
+      {tags.map(([tag, num]) => (
+        <a
+          href={`/tags/${tag}`}
+          class="font-serif px-4 py-2 bg-muted rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+        >
+          {tag} <span class="bg-blue/60 dark:bg-blue/80 w-5 inline-block rd-full h-5 text-center lh-5 font-mono">{num}</span>
+        </a>
+      ))}
+    </div>
+  </main>
+</BaseLayout>

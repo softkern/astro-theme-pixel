@@ -1,0 +1,33 @@
+---
+import type { MarkdownHeading } from 'astro'
+
+interface Props {
+  headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+---
+
+<nav class="toc">
+  <h2 class="text-xl font-bold mb-4">Table of Contents</h2>
+  <ul class="space-y-2">
+    {headings.map((heading) => (
+      <li class={`toc-item depth-${heading.depth}`}>
+        <a href={`#${heading.slug}`} class="hover:text-primary transition-colors">
+          {heading.text}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .toc-item {
+    margin-left: calc(var(--depth) * 1rem);
+  }
+  .depth-2 { --depth: 0; }
+  .depth-3 { --depth: 1; }
+  .depth-4 { --depth: 2; }
+  .depth-5 { --depth: 3; }
+  .depth-6 { --depth: 4; }
+</style>

@@ -27,7 +27,7 @@ import ThemeToggle from './ThemeToggle.astro'
           document.querySelector("#menus")?.classList.toggle('expanded')
       })
 
-      const pathname = window.location.pathname.split("/").splice(0, 2).join("/")
+      const pathname = window.location.pathname
       const currentLink = document.querySelector(`#menus a[href="${pathname}"]`)
       if (currentLink) {
           currentLink.classList.add("selected")
