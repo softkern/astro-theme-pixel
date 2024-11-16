@@ -31,7 +31,7 @@ const { Content, headings } = await post.render()
           </time>
         </div>
         {
-          post.data.tags?.length > 0 && 
+          post.data.tags && post.data.tags.length > 0 ? 
           <div class="flex items-center space-x-2">
             <div class="i-mingcute:tag-2-line w-5 h-5" />
             <div class="flex space-x-2">
@@ -40,6 +40,8 @@ const { Content, headings } = await post.render()
               ))}
             </div>
           </div>
+          :
+          <div></div>
         }
       </div>
       <div class="flex flex-col md:flex-row gap-8">
