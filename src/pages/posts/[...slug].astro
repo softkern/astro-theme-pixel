@@ -35,7 +35,7 @@ const { Content, headings } = await post.render()
           <div class="flex items-center space-x-2">
             <div class="i-mingcute:tag-2-line w-5 h-5" />
             <div class="flex space-x-2">
-              {post.data.tags.map((tag: string) => (
+              {post.data.tags?.map((tag: string) => (
                 <a href={`/tags/${tag}`} class="hover:text-primary transition-colors">{tag}</a>
               ))}
             </div>
