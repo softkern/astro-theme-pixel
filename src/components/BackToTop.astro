@@ -1,0 +1,29 @@
+---
+---
+
+<button
+  id="back-to-top"
+  class="fixed bottom-6 right-8 bg-primary text-primary-foreground w-8 h-8 rd-full shadow-lg opacity-0 transition-opacity duration-300 hover:bg-primary/90"
+  aria-label="Back to top"
+>
+
+  <div class="i-mingcute:arrow-up-line w-6 h-6 lh-6"></div>
+</button>
+
+<script>
+  const backToTopButton = document.getElementById('back-to-top');
+
+  const toggleBackToTopButton = () => {
+    if (window.scrollY > 300) {
+      backToTopButton?.classList.remove('opacity-0');
+    } else {
+      backToTopButton?.classList.add('opacity-0');
+    }
+  };
+
+  window.addEventListener('scroll', toggleBackToTopButton);
+
+  backToTopButton?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>

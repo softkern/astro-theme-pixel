@@ -1,4 +1,12 @@
-import type { Link } from '@types'
+import type { Link, Site } from '@types'
+
+const SITE: Site = {
+  url: 'https://softkern.com',
+  favicon: '/favicon.svg',
+  author: 'softkern',
+  title: '软核',
+  description: '欢迎来到我的个人网站',
+}
 
 const MENUS: Link[] = [
   { name: '首页', url: '/' },
@@ -7,4 +15,4 @@ const MENUS: Link[] = [
   { name: '关于', url: '/about' },
 ]
 
-export { MENUS }
+export { MENUS, SITE }
