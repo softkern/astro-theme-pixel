@@ -17,7 +17,9 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^3.1.9",
     "@astrojs/rss": "^4.0.9",
+    "@playform/compress": "^0.1.6",
     "astro": "^4.16.10",
+    "astro-expressive-code": "^0.38.3",
     "dayjs": "^1.11.13",
     "typescript": "^5.6.3"
   },
@@ -41,8 +43,6 @@
       "biome format --write --no-errors-on-unmatched",
       "biome lint --write --no-errors-on-unmatched"
     ],
-    "*": [
-      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
-    ]
+    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
   }
 }
