@@ -7,9 +7,9 @@ const postCollection = defineCollection({
       title: z.string(),
       excerpt: z.string().optional(),
       cover: image()
-        .refine((img) => img.height < 400, {
-          message: 'Cover image must be at most 400 pixels height!',
-        })
+        // .refine((img) => img.height < 400, {
+        //   message: 'Cover image must be at most 400 pixels height!',
+        // })
         .optional(),
       category: z.string().optional(),
       tags: z.array(z.string()).optional(),

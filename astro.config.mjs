@@ -17,9 +17,9 @@ export default defineConfig({
       injectReset: true, // or a path to the reset file
     }),
     expressiveCode({
+      // useThemedScrollbars: true,
       themeCssSelector: (theme) => `.${theme.type}`,
       themes: ['catppuccin-mocha', 'catppuccin-latte'],
-      // useThemedScrollbars: true,
       styleOverrides: {
         borderRadius: '0.5em',
       },
