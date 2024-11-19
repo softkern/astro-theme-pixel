@@ -2,9 +2,13 @@
 import MainHero from '@components/MainHero.astro'
 import RecentPosts from '@components/RecentPosts.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
+import { SITE } from 'config'
 ---
 
-<BaseLayout>
+<BaseLayout head={{
+  title: SITE.title,
+  description: SITE.description || "",
+}}>
   <MainHero />
   <RecentPosts />
 </BaseLayout>

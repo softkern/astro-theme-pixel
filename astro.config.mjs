@@ -1,13 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
-import UnoCSS from 'unocss/astro'
-
-import mdx from '@astrojs/mdx'
 import { SITE } from './site.config'
 
+import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
 import compress from '@playform/compress'
-
 import expressiveCode from 'astro-expressive-code'
+import UnoCSS from 'unocss/astro'
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,6 +24,7 @@ export default defineConfig({
       },
     }),
     compress(),
+    sitemap(),
     mdx(),
   ],
 })

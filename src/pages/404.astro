@@ -2,7 +2,10 @@
 import BaseLayout from '@layouts/BaseLayout.astro'
 ---
 
-<BaseLayout>
+<BaseLayout head={{
+  title: "Not Fount",
+  description: "404",
+}}>
   <div class="i-mingcute:confused-line w-32 h-32 mx-auto mb-8 text-primary"></div>
   <h1 class="text-4xl font-bold mb-8">404: 页面找不到了哟</h1>
   <div class="space-y-4">

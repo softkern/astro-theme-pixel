@@ -1,0 +1,56 @@
+---
+import { SITE } from 'config'
+
+export interface HeadInfo {
+  title: string
+  description: string
+  author?: string
+  canonicalURL?: string
+  image?: string
+  type?: string
+}
+
+type Props = HeadInfo
+
+const {
+  title,
+  description = SITE.description,
+  author = SITE.author,
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  image,
+  type = 'website',
+} = Astro.props
+
+const socialImageURL = new URL(image ?? 'favicon.svg', Astro.url.origin).href
+const ogType = type
+---
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href={canonicalURL} />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title} | {SITE.title}</title>
+<meta name="title" content={`${title} | ${SITE.title}`} />
+<meta name="description" content={description} />
+<meta name="author" content={author} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="alternate" type="application/rss+xml" title={SITE.title} href={`${Astro.site}rss.xml`} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content={title || SITE.title} />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImageURL} />
+<meta content="800" property="og:image:width" />
+<meta content="400" property="og:image:height" />
+<meta content="image/png" property="og:image:type" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content={socialImageURL ? "summary_large_image" : "summary"} />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title || SITE.title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={socialImageURL} />

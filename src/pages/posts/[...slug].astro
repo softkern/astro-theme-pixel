@@ -17,7 +17,12 @@ const { post } = Astro.props
 const { Content, headings } = await post.render()
 ---
 
-<BaseLayout>
+<BaseLayout head={{
+  title: `${post.data.title}`,
+  description: post.data.excerpt || "",
+  image: post.data.cover?.src || "",
+  type: "article",
+}}>
   <article class="max-w-4xl mx-auto">
     {post.data.cover && (
       <Image src={post.data.cover} alt={post.data.title} class="w-full h-64 object-cover rounded-lg mb-8" />

@@ -5,7 +5,10 @@ import { fetchTags } from '@lib/post'
 const tags = Array.from(await fetchTags())
 ---
 
-<BaseLayout>
+<BaseLayout head={{
+  title: "All Tags",
+  description: "All tags on this website",
+}}>
   <h1 class="text-4xl font-bold mb-8">标签</h1>
   <div class="flex flex-wrap gap-4">
     {tags.map(([tag, num]) => (

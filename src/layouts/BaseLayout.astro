@@ -1,20 +1,21 @@
 ---
 import BackToTop from '@components/BackToTop.astro'
+import BaseHead, { type HeadInfo } from '@components/BaseHead.astro'
 import Footer from '@components/Footer.astro'
 import Header from '@components/Header.astro'
 import '@styles/global.css'
 import { ViewTransitions } from 'astro:transitions'
 
-const { title } = Astro.props
+interface Props {
+  head: HeadInfo
+}
+
+const { head } = Astro.props
 ---
 
 <html lang="zh-CN">
 	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+    <BaseHead {...head} />
     <ViewTransitions />
 	</head>
 	<body class="bg-background text-foreground antialiased scroll-smooth">
