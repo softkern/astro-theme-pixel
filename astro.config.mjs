@@ -23,7 +23,9 @@ export default defineConfig({
         borderRadius: '0.5em',
       },
     }),
-    compress(),
+    compress({
+      HTML: false,
+    }),
     sitemap(),
     mdx(),
   ],
