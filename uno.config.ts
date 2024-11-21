@@ -1,4 +1,4 @@
-import { defineConfig, presetIcons, presetTypography, presetUno, transformerDirectives } from 'unocss'
+import { defineConfig, presetIcons, presetTypography, presetUno, presetWebFonts, transformerDirectives } from 'unocss'
 
 export default defineConfig({
   shortcuts: {
@@ -12,6 +12,12 @@ export default defineConfig({
         height: '1.2em',
         width: '1.2em',
         'vertical-align': 'text-bottom',
+      },
+    }),
+    presetWebFonts({
+      fonts: {
+        sans: 'Roboto',
+        mono: ['Fira Code', 'Fira Mono:400,700'],
       },
     }),
     presetTypography(),
