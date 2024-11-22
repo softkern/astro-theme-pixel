@@ -1,0 +1,48 @@
+---
+---
+
+<div class="animated-background">
+  <div class="pixel pixel-1"></div>
+  <div class="pixel pixel-2"></div>
+  <div class="pixel pixel-3"></div>
+  <div class="pixel pixel-4"></div>
+  <div class="pixel pixel-5"></div>
+</div>
+
+<style>
+  .animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .pixel {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(0, 123, 255, 0.4);
+    animation: float 15s infinite;
+  }
+
+  html.dark .pixel {
+    background-color: rgba(146, 191, 240, 0.5);
+  }
+
+  .pixel-1 { top: 10%; left: 20%; animation-delay: 0s; }
+  .pixel-2 { top: 30%; left: 80%; animation-delay: 2s; }
+  .pixel-3 { top: 50%; left: 50%; animation-delay: 4s; }
+  .pixel-4 { top: 70%; left: 10%; animation-delay: 6s; }
+  .pixel-5 { top: 90%; left: 70%; animation-delay: 8s; }
+
+  @keyframes float {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(50px, 50px) rotate(90deg); }
+    50% { transform: translate(100px, 0) rotate(180deg); }
+    75% { transform: translate(50px, -50px) rotate(270deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+  }
+</style>
