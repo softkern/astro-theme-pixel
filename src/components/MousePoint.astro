@@ -1,0 +1,44 @@
+---
+---
+<div 
+  class="mouse-follower fixed w-8 h-8 pointer-events-none z-[100]"
+  style="left: -16px; top: -16px;"
+>
+  <div class="w-full h-full relative animate-float">
+    <div class="absolute inset-0 bg-primary opacity-20 rounded-full"></div>
+    <div class="absolute inset-2 bg-primary opacity-40 rounded-full"></div>
+    <div class="absolute inset-3 bg-primary opacity-60 rounded-full"></div>
+  </div>
+</div>
+
+<script>
+let follower: HTMLDivElement | null = null;
+let animationFrame = 0;
+
+function updateCursor(e: MouseEvent) {
+  if (!animationFrame) {
+    animationFrame = requestAnimationFrame(() => {
+      if (follower) {
+        follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        
+        const target = e.target as HTMLElement;
+        const isInteractive = target.tagName === 'A' || 
+                            target.tagName === 'BUTTON' || 
+                            target.closest('a, button') !== null;
+        
+        if (isInteractive) {
+          follower.classList.add('scale-150');
+        } else {
+          follower.classList.remove('scale-150');
+        }
+      }
+      animationFrame = 0;
+    });
+  }
+}
+
+document.addEventListener('astro:page-load', () => {
+  follower = document.querySelector('.mouse-follower');
+  document.addEventListener('mousemove', updateCursor, { passive: true });
+});
+</script>

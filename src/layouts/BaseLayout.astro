@@ -1,9 +1,9 @@
 ---
-import AnimatedBackground from '@components/AnimatedBackground.astro'
 import BackToTop from '@components/BackToTop.astro'
 import BaseHead, { type HeadInfo } from '@components/BaseHead.astro'
 import Footer from '@components/Footer.astro'
 import Header from '@components/Header.astro'
+import MousePoint from '@components/MousePoint.astro'
 import '@styles/global.css'
 import { ViewTransitions } from 'astro:transitions'
 
@@ -19,13 +19,13 @@ const { head } = Astro.props
     <BaseHead {...head} />
     <ViewTransitions />
 	</head>
-	<body class="min-h-screen bg-background text-foreground antialiased scroll-smooth">
-    <AnimatedBackground />
+	<body class=" bg-background text-foreground font-mono min-h-screen antialiased scroll-smooth">
     <Header />
     <main class="container mx-auto px-4 py-8">
       <slot />
     </main>
     <Footer />
+    <MousePoint />
     <BackToTop />
 	</body>
 </html>
