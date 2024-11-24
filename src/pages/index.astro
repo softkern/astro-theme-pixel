@@ -1,5 +1,5 @@
 ---
-import MainHero from '@components/MainHero.astro'
+import HeroSection from '@components/HeroSection.astro'
 import RecentPosts from '@components/RecentPosts.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
 import { SITE } from 'config'
@@ -9,6 +9,8 @@ import { SITE } from 'config'
   title: SITE.title,
   description: SITE.description || "",
 }}>
-  <MainHero />
-  <RecentPosts />
+  <div class="min-h-screen max-w-screen-xl mx-auto px-4 py-12">
+    <HeroSection />
+    <RecentPosts />
+  </div>
 </BaseLayout>

@@ -1,53 +1,47 @@
-:root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 240 5.9% 10%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 5.9% 10%;
-  --radius: 0.3rem;
-
-  scrollbar-gutter: stable;
-  --scrollbar: 0 0% 90%;
-  --scrollbar-hover: 0 0% 75%;
+/* selection styles */
+::selection {
+  /* biome-ignore lint/correctness/noUnknownFunction: <explanation> */
+  background-color: theme("colors.primary.DEFAULT");
+  /* biome-ignore lint/correctness/noUnknownFunction: <explanation> */
+  color: theme("colors.light.surface");
 }
 
-.dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+/* animation */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
-  --scrollbar: 240 10% 20%;
-  --scrollbar-hover: 240 10% 40%;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* code block max height */
@@ -57,26 +51,44 @@
 }
 
 /* scrollbar style */
-* {
-  scrollbar-color: hsl(var(--scrollbar)) hsl(var(--background));
-}
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
 }
 ::-webkit-scrollbar:horizontal {
-  height: 6px;
+  height: 10px;
 }
 
-::-webkit-scrollbar-track,
-::-webkit-scrollbar-corner {
-  background: var(--background);
-  border-radius: 10px;
+::-webkit-scrollbar-track {
+  /* biome-ignore lint/correctness/noUnknownFunction: <explanation> */
+  background: theme("colors.light.surface");
 }
+
+.dark ::-webkit-scrollbar-track {
+  /* biome-ignore lint/correctness/noUnknownFunction: <explanation> */
+  background: theme("colors.dark.surface");
+}
+
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar);
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 5px;
 }
+
+.dark ::-webkit-scrollbar-thumb {
+  /* biome-ignore lint/correctness/noUnknownFunction: <explanation> */
+  background: theme("colors.primary.800");
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-hover);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  /* biome-ignore lint/correctness/noUnknownFunction: <explanation> */
+  background: theme("colors.primary.700");
+}
+
+/* Performance optimizations */
+img {
+  content-visibility: auto;
 }

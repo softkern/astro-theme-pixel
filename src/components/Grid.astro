@@ -1,0 +1,231 @@
+---
+---
+<canvas 
+  id="grid-canvas" 
+  class="absolute inset-0 w-full h-full"
+></canvas>
+
+<script>
+class GridAnimation {
+  private canvas: HTMLCanvasElement;
+  private ctx: CanvasRenderingContext2D;
+  private particles: Array<{
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+  }> = [];
+  private mouse = { x: 0, y: 0 };
+  private gridSize = 30;
+  private lastTime = 0;
+  private readonly FPS = 60;
+  private frameInterval = 1000 / this.FPS;
+  private resizeObserver: ResizeObserver;
+  private isDarkMode: boolean;
+
+  constructor(canvas: HTMLCanvasElement) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d')!;
+    this.isDarkMode = document.documentElement.classList.contains('dark');
+    
+    // Initialize resize observer
+    this.resizeObserver = new ResizeObserver(() => this.resize());
+    this.resizeObserver.observe(canvas.parentElement!);
+    
+    this.resize();
+    this.init();
+    this.addEventListeners();
+    this.animate();
+
+    // Watch for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          this.isDarkMode = document.documentElement.classList.contains('dark');
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+
+  private resize() {
+    const rect = this.canvas.parentElement!.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    
+    this.canvas.width = rect.width * dpr;
+    this.canvas.height = rect.height * dpr;
+    
+    this.canvas.style.width = `${rect.width}px`;
+    this.canvas.style.height = `${rect.height}px`;
+    
+    this.ctx.scale(dpr, dpr);
+    
+    this.particles = [];
+    this.init();
+  }
+
+  private init() {
+    const area = this.canvas.width * this.canvas.height;
+    const particleCount = Math.floor(area / 10000);
+    
+    for (let i = 0; i < particleCount; i++) {
+      this.particles.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2 + 1
+      });
+    }
+  }
+
+  private addEventListeners() {
+    this.canvas.addEventListener('mousemove', (e) => {
+      const rect = this.canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      
+      this.mouse.x = (e.clientX - rect.left) * dpr;
+      this.mouse.y = (e.clientY - rect.top) * dpr;
+    });
+
+    this.canvas.addEventListener('mouseleave', () => {
+      this.mouse.x = -1000;
+      this.mouse.y = -1000;
+    });
+  }
+
+  private drawGrid() {
+    const dpr = window.devicePixelRatio || 1;
+    // Adjust grid color based on theme
+
+    this.ctx.strokeStyle = this.isDarkMode 
+      ? 'rgba(0, 255, 157, 0.15)' 
+      : 'rgba(0, 179, 107, 0.08)';
+    this.ctx.lineWidth = 1;
+
+    const scaledGridSize = this.gridSize * dpr;
+
+    for (let x = 0; x <= this.canvas.width; x += scaledGridSize) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, 0);
+      this.ctx.lineTo(x, this.canvas.height);
+      this.ctx.stroke();
+    }
+
+    for (let y = 0; y <= this.canvas.height; y += scaledGridSize) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, y);
+      this.ctx.lineTo(this.canvas.width, y);
+      this.ctx.stroke();
+    }
+  }
+
+  private updateParticles() {
+    this.particles.forEach(particle => {
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+
+      if (particle.x < 0 || particle.x > this.canvas.width) {
+        particle.vx *= -1;
+        particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+      }
+      if (particle.y < 0 || particle.y > this.canvas.height) {
+        particle.vy *= -1;
+        particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+      }
+
+      const dx = this.mouse.x - particle.x;
+      const dy = this.mouse.y - particle.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < 100) {
+        const force = (100 - dist) / 100;
+        particle.vx -= (dx / dist) * force * 0.5;
+        particle.vy -= (dy / dist) * force * 0.5;
+      }
+
+      const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
+      const maxSpeed = 2;
+      if (speed > maxSpeed) {
+        particle.vx = (particle.vx / speed) * maxSpeed;
+        particle.vy = (particle.vy / speed) * maxSpeed;
+      }
+    });
+  }
+
+  private drawParticles() {
+    // Adjust particle color based on theme
+    this.ctx.fillStyle = this.isDarkMode 
+      ? 'rgba(0, 255, 157, 0.8)' 
+      : 'rgba(0, 179, 107, 0.5)';
+    
+    this.particles.forEach(particle => {
+      this.ctx.beginPath();
+      this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      this.particles.forEach(other => {
+        const dx = particle.x - other.x;
+        const dy = particle.y - other.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 80) {
+          // Adjust connection color based on theme
+          const opacity = this.isDarkMode ? 0.3 : 0.15;
+          this.ctx.beginPath();
+          this.ctx.strokeStyle = this.isDarkMode
+            ? `rgba(0, 255, 157, ${opacity * (1 - dist / 80)})`
+            : `rgba(0, 179, 107, ${opacity * (1 - dist / 80)})`;
+          this.ctx.lineWidth = 1;
+          this.ctx.moveTo(particle.x, particle.y);
+          this.ctx.lineTo(other.x, other.y);
+          this.ctx.stroke();
+        }
+      });
+    });
+  }
+
+  private animate(currentTime = 0) {
+    requestAnimationFrame(time => this.animate(time));
+
+    const deltaTime = currentTime - this.lastTime;
+
+    if (deltaTime < this.frameInterval) return;
+
+    this.lastTime = currentTime - (deltaTime % this.frameInterval);
+
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.drawGrid();
+    this.updateParticles();
+    this.drawParticles();
+  }
+
+  public destroy() {
+    this.resizeObserver.disconnect();
+  }
+}
+
+let gridAnimation: GridAnimation | null = null;
+
+document.addEventListener('astro:page-load', () => {
+  const canvas = document.getElementById('grid-canvas') as HTMLCanvasElement;
+  if (canvas) {
+    if (gridAnimation) {
+      gridAnimation.destroy();
+    }
+    gridAnimation = new GridAnimation(canvas);
+  }
+});
+
+document.addEventListener('astro:before-swap', () => {
+  if (gridAnimation) {
+    gridAnimation.destroy();
+    gridAnimation = null;
+  }
+});
+</script>

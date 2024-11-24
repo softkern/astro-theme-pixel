@@ -4,8 +4,8 @@ const SITE: Site = {
   url: 'https://softkern.com',
   favicon: '/favicon.svg',
   author: 'softkern',
-  title: '软核',
-  description: '欢迎来到我的个人网站',
+  title: 'softkern',
+  description: 'welcome to my personal website',
 }
 
 const MENUS: Link[] = [

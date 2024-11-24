@@ -1,4 +1,5 @@
 ---
+import Grid from '@components/Grid.astro'
 import PostCard from '@components/PostCard.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
 import { fetchPosts } from '@lib/post'
@@ -7,13 +8,37 @@ const posts = await fetchPosts()
 ---
 
 <BaseLayout head={{
-  title: `All Posts`,
+  title: `Blog`,
   description: `All the articles are here`,
 }}>
-  <h1 class="text-4xl font-bold mb-8">博客</h1>
-  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {posts.map((post) => (
-          <PostCard post={post} />
-      ))}
+
+  <div class="relative min-h-screen">
+    <div class="absolute inset-0">
+      <Grid />
+    </div>
+
+    <div class="relative max-w-screen-xl mx-auto px-4 py-20">
+      <div class="mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg mb-6">
+          <span class="animate-pulse">●</span> 
+          <span class="font-pixel">BLOG</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-pixel mb-4">
+          THOUGHTS && <span class="text-primary">IDEAS</span>
+        </h1>
+        <p class="text-slate-400 text-lg">
+          Exploring code, game, and everything in between.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <a href={`/posts/${post.slug}`} class="block">
+              <PostCard post={post} />
+            </a>
+          ))}
+      </div>
+    </div>
   </div>
+
 </BaseLayout>

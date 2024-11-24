@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import FormattedDate from '@components/FormattedDate.astro'
+import TableOfContents from '@components/TableOfContents.astro'
+import BaseLayout from '@layouts/BaseLayout.astro'
+import { getReadingTime } from '@lib/reading-time'
+
+interface Props {
+  post: CollectionEntry<'posts'>
+}
+
+const { post } = Astro.props
+const { headings } = await post.render()
+const readingTime = getReadingTime(post.body)
+---
+
+<BaseLayout head={{
+  title: `${post.data.title}`,
+  description: post.data.excerpt || "",
+  image: post.data.cover?.src || "",
+  type: "article",
+}}>
+  <article class="max-w-4xl mx-auto px-4 py-20">
+    {post.data.cover && (
+      <Image src={post.data.cover} alt={post.data.title} class="w-full h-64 object-cover rounded-lg mb-8" />
+    )}
+    <h1 class="font-pixel text-4xl mb-4">{post.data.title}</h1>
+    <div class="flex items-center space-x-4 mb-8 text-gray-500">
+      <div class="flex items-center space-x-2">
+        <div class="i-pixelarticons:calendar-text w-5 h-5"></div>
+        <FormattedDate date={post.data.createdAt} />
+        {post.data.updatedAt && (
+          <div class="flex items-center gap-2">
+            <span class="text-gray-500">Updated:</span>
+            <FormattedDate date={post.data.updatedAt} />
+          </div>
+        )}
+      </div>
+      <div>
+        <div class="i-pixelarticons:clock w-5 h-5"></div>
+        {readingTime}
+      </div>
+
+      {
+        post.data.tags && post.data.tags.length > 0 ? 
+        <div class="flex items-center space-x-2">
+          <div class="i-pixelarticons:label w-5 h-5"></div>
+          <div class="flex space-x-2">
+            {post.data.tags?.map((tag: string) => (
+              <a href={`/tags/${tag}`} class="hover:text-primary transition-colors">{tag}</a>
+            ))}
+          </div>
+        </div>
+        :
+        <div></div>
+      }
+    </div>
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="flex-1">
+        <div class="prose dark:prose-invert max-w-none">
+          <slot />
+        </div>
+      </div>
+      {
+        headings.length > 0 &&
+        <aside class="md:w-1/4">
+          <TableOfContents headings={headings} />
+        </aside>
+      }
+    </div>
+  </article>
+</BaseLayout>

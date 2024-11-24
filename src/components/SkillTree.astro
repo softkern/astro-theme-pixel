@@ -1,0 +1,78 @@
+---
+const skills = [
+  {
+    name: 'Language',
+    level: 35,
+    icon: 'i-pixelarticons-code',
+    subskills: ['Python', 'Golang', 'Rust', 'Javascript', 'HTML', 'CSS'],
+  },
+  {
+    name: 'Frontend',
+    level: 35,
+    icon: 'i-pixelarticons-script-text',
+    subskills: ['Astro', 'Vue', 'React', 'CSS'],
+  },
+  {
+    name: 'Backend',
+    level: 55,
+    icon: 'i-pixelarticons-server',
+    subskills: ['Flask', 'FastAPI', 'AXUM', 'SQL'],
+  },
+  {
+    name: 'DevOps',
+    level: 30,
+    icon: 'i-pixelarticons-cloud',
+    subskills: ['Linux', 'Docker', 'CI/CD'],
+  },
+]
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {skills.map(skill => (
+    <div class="bg-light-surface/80 dark:bg-dark-surface/80 border border-green-500/30  p-4">
+      <div class="flex items-center gap-3 mb-4">
+        <span class={`${skill.icon} text-green-500`}></span>
+        <h3 class="text-green-500">{skill.name}</h3>
+      </div>
+      
+      <div class="mb-4">
+        <div class="h-2 bg-black/10 dark:bg-black/60  overflow-hidden">
+          <div
+            class="h-full bg-green-500/50 transition-all duration-1000 skill-bar"
+            data-width={`${skill.level}%`}
+            style="width: 0%"
+          ></div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        {skill.subskills.map(subskill => (
+          <span class="px-2 py-1 border border-green-500/30 text-green-500/70 text-xs">
+            {subskill}
+          </span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+function initSkillBars() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target as HTMLElement;
+        const width = bar.dataset.width || '0%';
+        bar.style.width = width;
+        observer.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.skill-bar').forEach(bar => {
+    observer.observe(bar);
+  });
+}
+
+document.addEventListener('astro:page-load', initSkillBars);
+</script>

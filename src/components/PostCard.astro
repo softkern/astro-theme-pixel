@@ -1,33 +1,31 @@
 ---
-import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import { formatDate } from '@lib/date'
+import { getReadingTime } from '@lib/reading-time'
+
+interface Props {
+  post: CollectionEntry<'posts'>
+}
 
 const { post } = Astro.props
+const readingTime = getReadingTime(post.body)
 ---
 
-<article class="rounded-lg border-1 border-muted/80 bg-primary-foreground hover:border-primary/10 overflow-hidden">
-  {post.data.cover && (
-    <a href={`/posts/${post.slug}`}>
-      <Image src={post.data.cover} alt={post.data.title} class="w-full h-48 object-cover" />
-    </a>
-  )}
-  <div class="p-6">
-    <h2 class="text-lg font-bold mb-2 hover:text-primary transition-colors">
-      <a href={`/posts/${post.slug}`}>{post.data.title}</a>
-    </h2>
-    <p class="text-muted-foreground mb-4">{post.data.description}</p>
-    <div class="flex items-center justify-between">
-      <div class="flex items-center space-x-2 text-sm text-muted-foreground">
-        <time datetime={post.data.createdAt.toISOString()}>
-          {post.data.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </time>
-      </div>
-      <div class="flex items-center space-x-2">
-        {post.data.tags?.map((tag: string) => (
-          <a href={`/tags/${tag}`} class="text-xs bg-muted px-2 py-1 rounded-full hover:bg-primary hover:text-primary-foreground transition-colors">
-            {tag}
-          </a>
-        ))}
-      </div>
+<article class="border border-slate-200 dark:border-green-500/30 bg-light-surface/80 dark:bg-dark-surface/80 p-4 hover:border-primary dark:hover:border-green-500 transition-colors shadow-sm">
+  <div class="flex items-start justify-between mb-2">
+    <h3 class="font-mono text-primary-700 dark:text-green-500">
+      {post.data.title}
+    </h3>
+    <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-green-500/50">
+      <span>{formatDate(post.data.createdAt)}</span>
+      <span>•</span>
+      <span>{readingTime}</span>
     </div>
+  </div>
+  <p class="text-slate-600 dark:text-green-500/70 text-sm">
+    {post.data.excerpt}
+  </p>
+  <div class="mt-4 text-sm text-slate-400 dark:text-green-500/50 group-hover:text-primary dark:group-hover:text-green-500 transition-colors">
+    cat {post.slug}.md <span class="group-hover:ml-2 transition-all">→</span>
   </div>
 </article>

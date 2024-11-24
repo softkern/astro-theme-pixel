@@ -18,7 +18,7 @@ export default defineConfig({
     expressiveCode({
       // useThemedScrollbars: true,
       themeCssSelector: (theme) => `.${theme.type}`,
-      themes: ['catppuccin-mocha', 'catppuccin-latte'],
+      themes: ['material-theme-ocean', 'material-theme-lighter'],
       styleOverrides: {
         borderRadius: '0.5em',
       },

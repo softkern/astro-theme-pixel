@@ -2,18 +2,31 @@
 import { MENUS } from 'config'
 import Logo from './Logo.astro'
 import MenuToggle from './MenuToggle.astro'
+import Search from './Search.astro'
 import ThemeToggle from './ThemeToggle.astro'
 ---
 
-<header class="w-full">
+<header class="fixed top-0 w-full px-8 z-50 bg-light-surface/95  dark:bg-dark-surface/95 backdrop-blur supports-[backdrop-filter]:bg-light-surface/80 dark:supports-[backdrop-filter]:bg-dark-surface/80 border-b border-light-border dark:border-dark-border">
   <div class="relative flex items-center justify-between h-16 w-full mx-auto md:max-w-screen-md 2xl:max-w-screen-xl">
-    <Logo />
-    <nav id="menus" class="flex gap-1 ml-3 bg-background">
-      {MENUS.map((menu) => (
-        <a href={menu.url} class="px-4 py-2 font-400 text-sm text-muted-foreground hover:text-primary max-md:hover:bg-secondary">{menu.name}</a>
-      ))}
-    </nav>
-    <div class="flex gap-5 ml-auto mr-8">
+    <div class="mr-auto">
+      <Logo />
+    </div>
+
+    <div id="menus" class="fixed h-100vh md:h-auto top-16 inset-0 md:top-0 md:relative bg-light-surface/98 dark:bg-dark-surface/98 hidden md:flex flex-col gap-5 z-50 md:flex-row">
+      <div class="w-full md:w-64 flex justify-center md:justify-start pt-10 px-3 md:p-0">
+        <div class="w-full md:max-w-sm">
+          <Search />
+        </div>
+      </div>
+      
+      <nav id="nav" class="flex gap-5 md:bg-transparent z-50 px-3 md:p-0">
+        {MENUS.map((menu) => (
+          <a href={menu.url} class="py-3 md:py-2 font-400 text-base text-center hover:text-primary max-md:hover:bg-gray-100 dark:max-md:hover:bg-slate-800">{menu.name}</a>
+        ))}
+      </nav>
+
+    </div>
+    <div class="flex gap-3 ml-5">
       <ThemeToggle />
       <MenuToggle />
     </div>
@@ -41,12 +54,26 @@ import ThemeToggle from './ThemeToggle.astro'
     opacity: 1;
 }
 
+#menus.expanded #nav {
+  display: flex;
+  opacity: 1;
+}
+
 #menus a.selected {
   --uno: "text-primary font-semibold"
 }
 
 @media screen and (max-width: 768px) {
-  #menus {
+  #nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #nav a {
+    width: 100%;
+  }
+
+  /* #nav {
       display: none;
       position: absolute;
       top: 100%;
@@ -61,11 +88,11 @@ import ThemeToggle from './ThemeToggle.astro'
       padding: 20px 50px;
   }
 
-  #menus a {
+  #nav a {
     width: 100%;
-  }
+  } */
 
-  #menus a:hover {
+  #nav a:hover {
     /* background-color: #d5d5d5; */
     border-radius: 8px;
   }

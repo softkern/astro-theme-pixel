@@ -1,16 +1,65 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro'
+
+import Grid from '../components/Grid.astro'
+
+const links = [
+  { href: '/', label: 'RETURN_HOME', icon: 'i-pixelarticons-home' },
+  { href: '/posts', label: 'READ_BLOG', icon: 'i-pixelarticons-file-alt' },
+]
 ---
 
 <BaseLayout head={{
-  title: "Not Fount",
-  description: "404",
+  title: "Page Not Found",
+  description: ""
 }}>
-  <div class="i-mingcute:confused-line w-32 h-32 mx-auto mb-8 text-primary"></div>
-  <h1 class="text-4xl font-bold mb-8">404: 页面找不到了哟</h1>
-  <div class="space-y-4">
-    <a href="/" class="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-md hover:bg-primary/90 transition-colors">
-      回到首页
-    </a>
+  <div class="relative min-h-screen">
+    <div class="absolute inset-0">
+      <Grid />
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 flex items-center justify-center min-h-screen">
+      <div class="text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg mb-6">
+          <span class="animate-pulse">●</span> 
+          <span class="font-pixel">ERROR_404</span>
+        </div>
+        
+        <h1 class="text-6xl md:text-8xl font-pixel mb-6">
+          NOT_<span class="text-primary">FOUND</span>
+        </h1>
+        
+        <p class="text-light-muted dark:text-dark-muted text-lg mb-12 max-w-2xl mx-auto">
+          The page you are looking for seems to be lost.
+        </p>
+
+        <div class="bg-light-surface/80 dark:bg-dark-surface/80 border border-light-border dark:border-primary/30 p-8 mb-12 max-w-2xl mx-auto">
+          <div class="grid grid-cols-1 gap-4 text-center font-mono">
+            <div class="text-primary">
+              <span class="i-pixelarticons-warning text-3xl mb-4"></span>
+              <p class="text-sm mt-2">404_ERROR_DETECTED</p>
+            </div>
+            <div class="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+            <div>
+              <code class="text-light-muted dark:text-dark-muted">
+                Location: {Astro.url.pathname}
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          {links.map(link => (
+            <a 
+              href={link.href}
+              class="inline-flex items-center gap-2 px-6 py-3 bg-primary/10 hover:bg-primary/20 border border-primary/30 hover:border-primary text-primary font-pixel transition-colors"
+            >
+              <span class={link.icon}></span>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>

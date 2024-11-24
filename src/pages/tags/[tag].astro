@@ -25,10 +25,17 @@ const { posts } = Astro.props
   title: `Tag: ${tag}`,
   description: `All articles with tag '${tag}'`,
 }}>
-  <h1 class="text-4xl font-bold mb-8 font-serif">#{tag}</h1>
-  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-    {posts.map((post) => (
-      <PostCard post={post} />
-    ))}
+  <div class="max-w-screen-xl mx-auto px-4 py-20">
+    <h1 class="font-pixel text-4xl mb-12 text-center">
+      Posts tagged with <span class="text-primary">#{tag}</span>
+    </h1>
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <a href={`/posts/${post.slug}`}>
+          <PostCard post={post} />
+        </a>
+      ))}
+    </div>
   </div>
 </BaseLayout>

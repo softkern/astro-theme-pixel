@@ -1,8 +1,7 @@
 ---
-import { Image } from 'astro:assets'
-import TableOfContents from '@components/TableOfContents.astro'
-import BaseLayout from '@layouts/BaseLayout.astro'
+import PostLayout from '@layouts/PostLayout.astro'
 import { fetchPosts } from '@lib/post'
+import { getReadingTime } from '@lib/reading-time'
 import type { GetStaticPaths } from 'astro'
 
 export const getStaticPaths = (async () => {
@@ -14,53 +13,9 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths
 
 const { post } = Astro.props
-const { Content, headings } = await post.render()
+const { Content } = await post.render()
 ---
 
-<BaseLayout head={{
-  title: `${post.data.title}`,
-  description: post.data.excerpt || "",
-  image: post.data.cover?.src || "",
-  type: "article",
-}}>
-  <article class="max-w-4xl mx-auto">
-    {post.data.cover && (
-      <Image src={post.data.cover} alt={post.data.title} class="w-full h-64 object-cover rounded-lg mb-8" />
-    )}
-    <h1 class="text-4xl font-bold mb-4">{post.data.title}</h1>
-    <div class="flex items-center space-x-4 mb-8 text-muted-foreground">
-      <div class="flex items-center space-x-2">
-        <div class="i-mingcute:calendar-2-line w-5 h-5" />
-        <time datetime={post.data.createdAt.toISOString()}>
-          {post.data.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </time>
-      </div>
-      {
-        post.data.tags && post.data.tags.length > 0 ? 
-        <div class="flex items-center space-x-2">
-          <div class="i-mingcute:tag-2-line w-5 h-5" />
-          <div class="flex space-x-2">
-            {post.data.tags?.map((tag: string) => (
-              <a href={`/tags/${tag}`} class="hover:text-primary transition-colors">{tag}</a>
-            ))}
-          </div>
-        </div>
-        :
-        <div></div>
-      }
-    </div>
-    <div class="flex flex-col md:flex-row gap-8">
-      <div class="flex-1">
-        <div class="prose dark:prose-invert max-w-none">
-          <Content />
-        </div>
-      </div>
-      {
-        headings.length > 0 &&
-        <aside class="md:w-1/4">
-          <TableOfContents headings={headings} />
-        </aside>
-      }
-    </div>
-  </article>
-</BaseLayout>
+<PostLayout post={post}>
+  <Content />
+</PostLayout>

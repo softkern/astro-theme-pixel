@@ -1,10 +1,70 @@
 ---
+import Grid from '@components/Grid.astro'
+import SkillTree from '@components/SkillTree.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
+
+const bio = {
+  name: 'SoftKern',
+  title: 'Full Stack Developer',
+  description: [
+    'My main job is an algorithm engineer, and my hobby is a full stack developer. I enjoy writing code, trying new technologies, and experiencing emerging technology products.',
+    'I hope to create something useful or interesting',
+  ],
+  location: 'China',
+  interests: ['Web Development', 'Linux', 'Rust', 'Game'],
+}
 ---
 
 <BaseLayout head={{
   title: "About",
   description: "About this website and author",
 }}>
-  <h1 class="text-4xl font-bold mb-8">关于</h1>
+  <div class="relative min-h-screen">
+    <div class="absolute inset-0">
+      <Grid />
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 py-20">
+      <div class="mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg mb-6">
+          <span class="animate-pulse">●</span> 
+          <span class="font-pixel">ABOUT</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-pixel mb-4">
+          WHO_AM_<span class="text-primary">I</span>
+        </h1>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="space-y-6 bg-light-surface/80 dark:bg-dark-surface/80">
+          <div class="border border-light-border dark:border-primary/30 p-6">
+            <h2 class="font-pixel text-xl mb-4 text-primary">{bio.title}</h2>
+            {bio.description.map((line) => (
+              <p class="text-light-text dark:text-dark-text mb-2 whitespace-break-spaces">{line}</p>
+            ))}
+            <div class="flex items-center gap-2 text-light-muted dark:text-dark-muted mt-4">
+              <div class="i-pixelarticons:buildings"></div>
+              {bio.location}
+            </div>
+          </div>
+
+          <div class=" border border-light-border dark:border-primary/30 bg-light-surface/80 dark:bg-dark-surface/80 p-6">
+            <h2 class="font-pixel text-xl mb-4 text-primary">Interests</h2>
+            <div class="flex flex-wrap gap-2">
+              {bio.interests.map(interest => (
+                <span class="px-3 py-1 bg-primary/10 dark:bg-primary/20 text-primary">
+                  {interest}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-light-surface/80 dark:bg-dark-surface/80 border border-light-border dark:border-primary/30 p-6">
+          <h2 class="font-pixel text-xl mb-6 text-primary">Skills</h2>
+          <SkillTree />
+        </div>
+      </div>
+    </div>
+  </div>
 </BaseLayout>

@@ -1,4 +1,5 @@
 ---
+import Grid from '@components/Grid.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
 import { fetchTags } from '@lib/post'
 
@@ -6,18 +7,39 @@ const tags = Array.from(await fetchTags())
 ---
 
 <BaseLayout head={{
-  title: "All Tags",
+  title: "Blog Tags",
   description: "All tags on this website",
 }}>
-  <h1 class="text-4xl font-bold mb-8">标签</h1>
-  <div class="flex flex-wrap gap-4">
-    {tags.map(([tag, num]) => (
-      <a
-        href={`/tags/${tag}`}
-        class="font-serif px-4 py-2 bg-muted rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
-      >
-        {tag} <span class="bg-blue/60 dark:bg-blue/80 w-5 inline-block rd-full h-5 text-center lh-5 font-mono">{num}</span>
-      </a>
-    ))}
-  </div>
+  <div class="relative min-h-screen">
+    <div class="absolute inset-0">
+      <Grid />
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 py-20">
+      <div class="mb-12">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg mb-6">
+          <span class="animate-pulse">●</span> 
+          <span class="font-pixel">TAGS</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-pixel mb-4">
+          <span class="text-primary">TAGS</span>_OF_BlOG
+        </h1>
+      </div>
+
+      <div class="bg-light-surface/80 dark:bg-dark-surface/80 border border-light-border dark:border-primary/30 p-6">
+        <div class="flex flex-wrap gap-4">
+          {tags.map(([tag, num]) => (
+            <a 
+              href={`/tags/${tag}`}
+              class="relative px-4 py-2 bg-primary/5 dark:bg-primary/10 hover:bg-primary/10 transition-colors"
+            >
+              <span class="font-pixel text-primary">#{tag}</span>
+              <span class="ml-2 text-light-muted dark:text-dark-muted text-sm">
+                ({num})
+              </span>
+            </a>
+          ))}
+      </div>
+    </div>
+  </div>  
 </BaseLayout>

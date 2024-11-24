@@ -7,15 +7,23 @@ const recentPosts = posts.slice(0, 5)
 ---
 
 <section class="mt-16 mb-16">
-  <h2 class="text-xl font-bold mb-8">近期文章</h2>
-  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-    {recentPosts.map((post) => (
-      <PostCard post={post} />
-    ))}
+  <div class="flex items-center gap-4 mb-8">
+    <h2 class="font-pixel text-2xl">LATEST POSTS</h2>
+    <div class="flex-1 h-px bg-gradient-to-r from-primary/50 to-transparent"></div>
   </div>
-  <div class="mt-8 text-center">
-    <a href="/posts" class="inline-block bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
-      查看所有文章
-    </a>
+
+  <div> 
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {recentPosts.map((post) => (
+        <a href={`/posts/${post.slug}`} class="block">
+          <PostCard post={post} />
+        </a>
+      ))}
+    </div>
+    <div class="mt-8 text-center">
+      <a href="/posts" class="inline-block text-base px-6 py-2 border border-slate-200 dark:border-green-500/30 bg-white/80 dark:bg-black/20 p-4 hover:border-primary dark:hover:border-green-500 transition-colors shadow-sm">
+        查看所有文章
+      </a>
+    </div>
   </div>
 </section>

@@ -19,11 +19,12 @@ const { head } = Astro.props
     <BaseHead {...head} />
     <ViewTransitions />
 	</head>
-	<body class=" bg-background text-foreground font-mono min-h-screen antialiased scroll-smooth">
+	<body class=" bg-base color-base font-mono min-h-screen antialiased scroll-smooth">
     <Header />
-    <main class="container mx-auto px-4 py-8">
+    <main class="relative pt-16">
       <slot />
     </main>
+    
     <Footer />
     <MousePoint />
     <BackToTop />

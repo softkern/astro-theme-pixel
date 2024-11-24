@@ -34,6 +34,9 @@
     "@unocss/reset": "^0.64.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
+    "mdast-util-from-markdown": "^2.0.2",
+    "mdast-util-to-string": "^4.0.0",
+    "reading-time": "^1.5.0",
     "sharp": "^0.33.5",
     "unocss": "^0.64.0"
   },
@@ -46,6 +49,8 @@
       "biome format --write --no-errors-on-unmatched",
       "biome lint --write --no-errors-on-unmatched"
     ],
-    "*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
+    "*": [
+      "biome check --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
   }
 }
