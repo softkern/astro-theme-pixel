@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import FormattedDate from '@components/FormattedDate.astro'
+import Grid from '@components/Grid.astro'
 import TableOfContents from '@components/TableOfContents.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
 import { getReadingTime } from '@lib/reading-time'
@@ -21,12 +22,17 @@ const readingTime = getReadingTime(post.body)
   image: post.data.cover?.src || "",
   type: "article",
 }}>
-  <article class="max-w-4xl mx-auto px-4 py-20">
+<div class="relative min-h-screen">
+  <div class="absolute inset-0">
+      <Grid />
+  </div>
+
+  <article class="relative max-w-4xl mx-auto px-4 py-20">
     {post.data.cover && (
       <Image src={post.data.cover} alt={post.data.title} class="w-full h-64 object-cover rounded-lg mb-8" />
     )}
     <h1 class="font-pixel text-4xl mb-4">{post.data.title}</h1>
-    <div class="flex items-center space-x-4 mb-8 text-gray-500">
+    <div class="flex flex-col md:flex-row md:items-center md:space-x-4 mb-8 text-gray-500">
       <div class="flex items-center space-x-2">
         <div class="i-pixelarticons:calendar-text w-5 h-5"></div>
         <FormattedDate date={post.data.createdAt} />
@@ -70,4 +76,5 @@ const readingTime = getReadingTime(post.body)
       }
     </div>
   </article>
+</div>
 </BaseLayout>

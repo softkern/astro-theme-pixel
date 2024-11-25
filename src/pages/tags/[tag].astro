@@ -1,4 +1,5 @@
 ---
+import Grid from '@components/Grid.astro'
 import PostCard from '@components/PostCard.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
 import { fetchPosts, fetchTags } from '@lib/post'
@@ -25,7 +26,12 @@ const { posts } = Astro.props
   title: `Tag: ${tag}`,
   description: `All articles with tag '${tag}'`,
 }}>
-  <div class="max-w-screen-xl mx-auto px-4 py-20">
+<div class="relative min-h-screen">
+  <div class="absolute inset-0">
+      <Grid />
+  </div>
+
+  <div class="relative max-w-screen-xl mx-auto px-4 py-20">
     <h1 class="font-pixel text-4xl mb-12 text-center">
       Posts tagged with <span class="text-primary">#{tag}</span>
     </h1>
@@ -38,4 +44,5 @@ const { posts } = Astro.props
       ))}
     </div>
   </div>
+</div>
 </BaseLayout>

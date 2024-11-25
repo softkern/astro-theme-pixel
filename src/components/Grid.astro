@@ -104,8 +104,8 @@ class GridAnimation {
     // Adjust grid color based on theme
 
     this.ctx.strokeStyle = this.isDarkMode 
-      ? 'rgba(0, 255, 157, 0.15)' 
-      : 'rgba(0, 179, 107, 0.08)';
+      ? 'rgba(0, 255, 157, 0.05)' 
+      : 'rgba(0, 179, 107, 0.05)';
     this.ctx.lineWidth = 1;
 
     const scaledGridSize = this.gridSize * dpr;
@@ -125,71 +125,6 @@ class GridAnimation {
     }
   }
 
-  private updateParticles() {
-    this.particles.forEach(particle => {
-      particle.x += particle.vx;
-      particle.y += particle.vy;
-
-      if (particle.x < 0 || particle.x > this.canvas.width) {
-        particle.vx *= -1;
-        particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
-      }
-      if (particle.y < 0 || particle.y > this.canvas.height) {
-        particle.vy *= -1;
-        particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
-      }
-
-      const dx = this.mouse.x - particle.x;
-      const dy = this.mouse.y - particle.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      
-      if (dist < 100) {
-        const force = (100 - dist) / 100;
-        particle.vx -= (dx / dist) * force * 0.5;
-        particle.vy -= (dy / dist) * force * 0.5;
-      }
-
-      const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
-      const maxSpeed = 2;
-      if (speed > maxSpeed) {
-        particle.vx = (particle.vx / speed) * maxSpeed;
-        particle.vy = (particle.vy / speed) * maxSpeed;
-      }
-    });
-  }
-
-  private drawParticles() {
-    // Adjust particle color based on theme
-    this.ctx.fillStyle = this.isDarkMode 
-      ? 'rgba(0, 255, 157, 0.8)' 
-      : 'rgba(0, 179, 107, 0.5)';
-    
-    this.particles.forEach(particle => {
-      this.ctx.beginPath();
-      this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-      this.ctx.fill();
-
-      this.particles.forEach(other => {
-        const dx = particle.x - other.x;
-        const dy = particle.y - other.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 80) {
-          // Adjust connection color based on theme
-          const opacity = this.isDarkMode ? 0.3 : 0.15;
-          this.ctx.beginPath();
-          this.ctx.strokeStyle = this.isDarkMode
-            ? `rgba(0, 255, 157, ${opacity * (1 - dist / 80)})`
-            : `rgba(0, 179, 107, ${opacity * (1 - dist / 80)})`;
-          this.ctx.lineWidth = 1;
-          this.ctx.moveTo(particle.x, particle.y);
-          this.ctx.lineTo(other.x, other.y);
-          this.ctx.stroke();
-        }
-      });
-    });
-  }
-
   private animate(currentTime = 0) {
     requestAnimationFrame(time => this.animate(time));
 
@@ -201,8 +136,6 @@ class GridAnimation {
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.drawGrid();
-    this.updateParticles();
-    this.drawParticles();
   }
 
   public destroy() {
