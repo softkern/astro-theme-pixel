@@ -1,5 +1,6 @@
 ---
 import Grid from '@components/Grid.astro'
+import PageHeader from '@components/PageHeader.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
 import { fetchTags } from '@lib/post'
 
@@ -16,15 +17,10 @@ const tags = Array.from(await fetchTags())
     </div>
 
     <div class="relative max-w-7xl mx-auto px-4 py-20">
-      <div class="mb-12">
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg mb-6">
-          <span class="animate-pulse">●</span> 
-          <span class="font-pixel">TAGS</span>
-        </div>
-        <h1 class="text-4xl md:text-5xl font-pixel mb-4">
-          <span class="text-primary">TAGS</span>_OF_BlOG
-        </h1>
-      </div>
+      <PageHeader 
+        mark='TAGS' 
+        title="TAGS_OF_BLOG"
+      />
 
       <div class="bg-light-surface/80 dark:bg-dark-surface/80 border border-light-border dark:border-primary/30 p-6">
         <div class="flex flex-wrap gap-4">

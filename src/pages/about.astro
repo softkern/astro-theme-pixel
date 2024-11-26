@@ -1,5 +1,6 @@
 ---
 import Grid from '@components/Grid.astro'
+import PageHeader from '@components/PageHeader.astro'
 import SkillTree from '@components/SkillTree.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
 
@@ -25,15 +26,10 @@ const bio = {
     </div>
 
     <div class="relative max-w-7xl mx-auto px-4 py-20">
-      <div class="mb-12">
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg mb-6">
-          <span class="animate-pulse">●</span> 
-          <span class="font-pixel">ABOUT</span>
-        </div>
-        <h1 class="text-4xl md:text-5xl font-pixel mb-4">
-          WHO_AM_<span class="text-primary">I</span>
-        </h1>
-      </div>
+      <PageHeader 
+        mark='ABOUT',
+        title='WHO_AM_I'
+      />
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
         <div class="space-y-6 bg-light-surface/80 dark:bg-dark-surface/80">
