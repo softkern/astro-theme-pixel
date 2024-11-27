@@ -6,6 +6,7 @@ import Header from '@components/Header.astro'
 import MousePoint from '@components/MousePoint.astro'
 import '@styles/global.css'
 import { ViewTransitions } from 'astro:transitions'
+import { SITE } from 'config'
 
 interface Props {
   head: HeadInfo
@@ -28,5 +29,6 @@ const { head } = Astro.props
     <Footer />
     <MousePoint />
     <BackToTop />
+    <script defer src={SITE.umami?.url} data-website-id={SITE.umami?.website_id}></script>
 	</body>
 </html>

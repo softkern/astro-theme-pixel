@@ -13,6 +13,12 @@ interface Site {
   canonicalURL?: string
   ogImage?: string
   ogType?: string
+  umami?: Umami
+}
+
+interface Umami {
+  url: string
+  website_id: string
 }
 
 export type { Link, Site }

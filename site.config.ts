@@ -6,6 +6,10 @@ const SITE: Site = {
   author: 'softkern',
   title: 'softkern',
   description: 'welcome to my personal website',
+  umami: {
+    url: import.meta.env.SK_UMAMI_URL,
+    website_id: import.meta.env.SK_UMAMI_WEBSITE_ID,
+  },
 }
 
 const MENUS: Link[] = [
