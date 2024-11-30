@@ -1,4 +1,6 @@
-# Astro Starter Kit: Minimal
+# astro-theme-pixel (unfinished) 
+
+based on `Astro Starter Kit: Minimal`. 
 
 ```sh
 npm create astro@latest -- --template minimal
