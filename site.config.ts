@@ -1,10 +1,10 @@
 import type { Link, Site } from '@types'
 
 const SITE: Site = {
-  url: 'https://softkern.com',
+  url: 'http://localhost:4321',
   favicon: '/favicon.svg',
-  author: 'softkern',
-  title: 'softkern',
+  author: 'You Name',
+  title: 'Website Name',
   description: 'welcome to my personal website',
   umami: {
     url: import.meta.env.SK_UMAMI_URL,

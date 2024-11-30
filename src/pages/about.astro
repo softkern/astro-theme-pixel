@@ -3,16 +3,14 @@ import Grid from '@components/Grid.astro'
 import PageHeader from '@components/PageHeader.astro'
 import SkillTree from '@components/SkillTree.astro'
 import BaseLayout from '@layouts/BaseLayout.astro'
+import { SITE } from 'config'
 
 const bio = {
-  name: 'SoftKern',
+  name: SITE.author,
   title: 'Full Stack Developer',
-  description: [
-    'My main job is an algorithm engineer, and my hobby is a full stack developer. I enjoy writing code, trying new technologies, and experiencing emerging technology products.',
-    'I hope to create something useful or interesting',
-  ],
+  description: ['some description'],
   location: 'China',
-  interests: ['Web Development', 'Linux', 'Rust', 'Game'],
+  interests: ['Web Development', 'Linux', 'Rust', 'Game', '...'],
 }
 ---
 
